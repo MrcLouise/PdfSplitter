@@ -19,7 +19,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Build fat-jar with Maven
-        run: mvn clean package -Dmaven.test.skip=true
+        run: mvn clean package "-Dmaven.test.skip=true"
 
       - name: Package EXE with jpackage
         run: |

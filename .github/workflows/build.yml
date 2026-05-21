@@ -22,15 +22,7 @@ jobs:
         run: mvn clean package "-Dmaven.test.skip=true"
 
       - name: Package EXE with jpackage
-        run: |
-          jpackage `
-            --input target `
-            --name PdfSplitter `
-            --main-jar PdfSplitter-1.0.jar `
-            --main-class com.mrc.PdfSplitter `
-            --type exe `
-            --win-console true `
-            --dest output
+        run: jpackage --input target --name PdfSplitter --main-jar PdfSplitter-1.0.jar --main-class com.mrc.PdfSplitter --type exe --win-console --dest output
 
       - name: Upload EXE artifact
         uses: actions/upload-artifact@v4

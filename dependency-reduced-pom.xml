@@ -9,38 +9,73 @@
   <build>
     <plugins>
       <plugin>
-        <artifactId>maven-shade-plugin</artifactId>
-        <version>3.4.1</version>
-        <executions>
-          <execution>
-            <phase>package</phase>
-            <goals>
-              <goal>shade</goal>
-            </goals>
-            <configuration>
-              <transformers>
-                <transformer>
-                  <mainClass>com.mrc.PdfSplitter</mainClass>
-                </transformer>
-              </transformers>
-            </configuration>
-          </execution>
-        </executions>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.11.0</version>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+          <annotationProcessorPaths>
+            <path>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+              <version>1.18.30</version>
+            </path>
+          </annotationProcessorPaths>
+        </configuration>
       </plugin>
       <plugin>
         <artifactId>maven-shade-plugin</artifactId>
         <version>3.5.1</version>
         <executions>
           <execution>
+            <id>shade-pdfsplitter</id>
             <phase>package</phase>
             <goals>
               <goal>shade</goal>
             </goals>
             <configuration>
+              <filters>
+                <filter>
+                  <artifact>*:*</artifact>
+                  <excludes>
+                    <exclude>META-INF/*.SF</exclude>
+                    <exclude>META-INF/*.DSA</exclude>
+                    <exclude>META-INF/*.RSA</exclude>
+                  </excludes>
+                </filter>
+              </filters>
               <transformers>
                 <transformer>
-                  <mainClass>com.mrc.PdfSplitter</mainClass>
+                  <mainClass>com.mrc.pdf.PdfProcessor</mainClass>
                 </transformer>
+                <transformer />
+              </transformers>
+            </configuration>
+          </execution>
+          <execution>
+            <id>shade-pdfchecker</id>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <shadedArtifactAttached>true</shadedArtifactAttached>
+              <shadedClassifierName>pdfchecker</shadedClassifierName>
+              <filters>
+                <filter>
+                  <artifact>*:*</artifact>
+                  <excludes>
+                    <exclude>META-INF/*.SF</exclude>
+                    <exclude>META-INF/*.DSA</exclude>
+                    <exclude>META-INF/*.RSA</exclude>
+                  </excludes>
+                </filter>
+              </filters>
+              <transformers>
+                <transformer>
+                  <mainClass>com.mrc.pdf.PdfChecker</mainClass>
+                </transformer>
+                <transformer />
               </transformers>
             </configuration>
           </execution>
@@ -52,24 +87,71 @@
         <version>2.5.2</version>
         <executions>
           <execution>
-            <id>wrap-jar</id>
+            <id>wrap-pdfsplitter</id>
             <phase>package</phase>
             <goals>
               <goal>launch4j</goal>
             </goals>
             <configuration>
-              <headerType>gui</headerType>
+              <headerType>console</headerType>
               <outfile>${project.build.directory}/PdfSplitter.exe</outfile>
               <jar>${project.build.directory}/${project.build.finalName}.jar</jar>
               <jre>
                 <minVersion>1.8.0</minVersion>
               </jre>
+              <versionInfo>
+                <fileVersion>1.0.0.0</fileVersion>
+                <txtFileVersion>${project.version}</txtFileVersion>
+                <fileDescription>PdfSplitter</fileDescription>
+                <copyright>Copyright 2026</copyright>
+                <productVersion>1.0.0.0</productVersion>
+                <txtProductVersion>${project.version}</txtProductVersion>
+                <productName>PdfSplitter</productName>
+                <companyName>MRC</companyName>
+                <internalName>PdfSplitter</internalName>
+                <originalFilename>PdfSplitter.exe</originalFilename>
+              </versionInfo>
+            </configuration>
+          </execution>
+          <execution>
+            <id>wrap-pdfchecker</id>
+            <phase>package</phase>
+            <goals>
+              <goal>launch4j</goal>
+            </goals>
+            <configuration>
+              <headerType>console</headerType>
+              <outfile>${project.build.directory}/pdfchecker.exe</outfile>
+              <jar>${project.build.directory}/${project.build.finalName}-pdfchecker.jar</jar>
+              <jre>
+                <minVersion>1.8.0</minVersion>
+              </jre>
+              <versionInfo>
+                <fileVersion>1.0.0.0</fileVersion>
+                <txtFileVersion>${project.version}</txtFileVersion>
+                <fileDescription>PdfChecker</fileDescription>
+                <copyright>Copyright 2026</copyright>
+                <productVersion>1.0.0.0</productVersion>
+                <txtProductVersion>${project.version}</txtProductVersion>
+                <productName>PdfChecker</productName>
+                <companyName>MRC</companyName>
+                <internalName>PdfChecker</internalName>
+                <originalFilename>pdfchecker.exe</originalFilename>
+              </versionInfo>
             </configuration>
           </execution>
         </executions>
       </plugin>
     </plugins>
   </build>
+  <dependencies>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.18.30</version>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>

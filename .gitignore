@@ -1,38 +1,32 @@
+# Build output
 target/
-!.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
+*.class
+dependency-reduced-pom.xml
 
-### IntelliJ IDEA ###
-.idea/modules.xml
-.idea/jarRepositories.xml
-.idea/compiler.xml
-.idea/libraries/
-*.iws
-*.iml
-*.ipr
+# Logs
+log/
 
-### Eclipse ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
+# Local config / secrets
+CONNECTION.XML
+CONNECTION_LOCAL.XML
+cp.txt
 
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
+# Binaries (deploy via GitHub Releases instead)
+*.exe
+*.zip
+*.zip.base64
+*.zip.base64.txt
+*.jar
+*.part1
+*.part2
+*.part3
 
-### VS Code ###
-.vscode/
-
-### Mac OS ###
+# OS / IDE noise
 .DS_Store
+1.jpg
+
+# Test PDFs
+*.pdf
+
+# IDE
+.idea/
